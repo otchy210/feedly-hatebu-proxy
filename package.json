@@ -2,9 +2,9 @@
   "name": "feedly-hatebu-proxy",
   "version": "1.0.0",
   "description": "Hatebu API proxy server you should run when you use feedly-hatebu.",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/otchy210/feedly-hatebu-proxy/issues"
   },
-  "homepage": "https://github.com/otchy210/feedly-hatebu-proxy#readme"
+  "homepage": "https://github.com/otchy210/feedly-hatebu-proxy#readme",
+  "devDependencies": {
+    "electron": "^22.0.0"
+  }
 }
