@@ -1,5 +1,6 @@
 const { app, Tray, Menu, nativeImage } = require('electron');
 const path = require('path');
+const { startProxy } = require('./proxy');
 
 // need to put it in the global context to avoid GC
 let tray;
@@ -14,5 +15,6 @@ const addTray = () => {
 const main = async () => {
   await app.whenReady();
   addTray();
+  startProxy();
 }
 main();
