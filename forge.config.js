@@ -1,6 +1,8 @@
+const path = require('path');
+
 module.exports = {
   packagerConfig: {
-    icon: './images/app-icon'
+    icon: path.join(__dirname, 'images/app-icon')
   },
   rebuildConfig: {},
   makers: [
