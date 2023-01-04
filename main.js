@@ -29,14 +29,28 @@ const getTrayImage = (platform) => {
 
 // need to put it in the global context to avoid GC
 let tray;
+let trayImage;
+const getTrayImagePath = () => {
+  return path.join(__dirname, 'images', trayImage);
+}
+
 const addTray = (platform) => {
-  const trayImage = getTrayImage(platform);
-  const trayImagePath = path.join(__dirname, 'images', trayImage);
-  tray = new Tray(trayImagePath);
+  trayImage = getTrayImage(platform);
+  tray = new Tray(getTrayImagePath());
   tray.setToolTip('Feedly はてブ Proxy');
-  tray.setContextMenu(Menu.buildFromTemplate([
-    { label: '終了', type: 'normal', click: () => app.quit() },
-  ]));
+  if (platform === 'Mac') {
+    tray.setContextMenu(Menu.buildFromTemplate([
+      { label: 'テーマ切り替え', type: 'normal', click: () => {
+        trayImage = trayImage.indexOf('white') >= 0 ? 'tray-mac-black.png' : 'tray-mac-white.png';
+        tray.setImage(getTrayImagePath());
+      }},
+      { label: '終了', type: 'normal', click: () => app.quit() },
+    ]));
+  } else {
+    tray.setContextMenu(Menu.buildFromTemplate([
+      { label: '終了', type: 'normal', click: () => app.quit() },
+    ]));
+  }
 }
 
 const main = async () => {
