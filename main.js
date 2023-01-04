@@ -1,4 +1,4 @@
-const { app, Tray, Menu } = require('electron');
+const { app, Tray, Menu, nativeTheme } = require('electron');
 const path = require('path');
 const { startProxy } = require('./proxy');
 
@@ -13,6 +13,20 @@ const getPlatform = () => {
   }
 }
 
+const getTrayImage = (platform) => {
+  if (platform === 'Windows') {
+    return 'tray-win.ico';
+  }
+  if (platform === 'Mac') {
+    if (nativeTheme.shouldUseDarkColors) {
+      return 'tray-mac-white.png';
+    } else {
+      return 'tray-mac-black.png';
+    }
+  }
+  throw new Error('Unsupported platform');
+}
+
 // need to put it in the global context to avoid GC
 let tray;
 const addTray = () => {
@@ -22,7 +36,7 @@ const addTray = () => {
     throw new Error('Unsupported platform');
   }
   
-  const trayImage = platform === 'Windows' ? 'tray-win.ico' : 'tray-mac.png';
+  const trayImage = getTrayImage(platform);
   const trayImagePath = path.join(__dirname, 'images', trayImage);
   tray = new Tray(trayImagePath);
   tray.setToolTip('Feedly はてブ Proxy');
@@ -44,5 +58,11 @@ const main = async () => {
   addTray();
   hideDockIcon();
   startProxy();
+  nativeTheme.on("updated", () => {
+    if (tray) {
+      tray.destroy();
+    }
+    addTray();
+  });
 }
 main();
