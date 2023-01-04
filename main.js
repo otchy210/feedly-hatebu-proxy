@@ -29,13 +29,7 @@ const getTrayImage = (platform) => {
 
 // need to put it in the global context to avoid GC
 let tray;
-const addTray = () => {
-  // support Windows and Mac only
-  const platform = getPlatform();
-  if (platform === 'Unsupported') {
-    throw new Error('Unsupported platform');
-  }
-  
+const addTray = (platform) => {
   const trayImage = getTrayImage(platform);
   const trayImagePath = path.join(__dirname, 'images', trayImage);
   tray = new Tray(trayImagePath);
@@ -45,24 +39,22 @@ const addTray = () => {
   ]));
 }
 
-const hideDockIcon = () => {
-  const platform = getPlatform();
-  if (platform !== 'Mac') {
-    return;
-  }
-  app.dock.hide();
-}
-
 const main = async () => {
   await app.whenReady();
-  addTray();
-  hideDockIcon();
+  const platform = getPlatform();
+  if (platform === 'Unsupported') {
+    throw new Error('Unsupported platform');
+  }
+  addTray(platform);
+  if (platform === 'Mac') {
+    app.dock.hide();
+    nativeTheme.on("updated", () => {
+      if (tray) {
+        tray.destroy();
+      }
+      addTray(platform);
+    });
+  }
   startProxy();
-  nativeTheme.on("updated", () => {
-    if (tray) {
-      tray.destroy();
-    }
-    addTray();
-  });
 }
 main();
