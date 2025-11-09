@@ -3,4 +3,5 @@ notes.txt
 .DS_Store
 
 out/feedly-hatebu-proxy-darwin-x64/
+out/feedly-hatebu-proxy-win32-x64/
 out/make/
