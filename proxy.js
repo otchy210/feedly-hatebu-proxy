@@ -55,7 +55,7 @@ const server = http.createServer((req, res) => {
         }); 
     }).on('error', (err) => {
         console.error(err);
-        errorInternalServerError();
+        errorInternalServerError(res);
     });
 });
 

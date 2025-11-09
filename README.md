@@ -4,3 +4,6 @@ Feedly はてブ Proxy はそれ単体では動作せず、[Feedly はてブ](ht
 
 詳しくは、[Feedly はてブのホームページ](https://github.com/otchy210/feedly-hatebu/blob/master/README.md)を参照してください。
 
+## 変更履歴
+-   1.0.1: (2025-11-09) はてブサーバエラーのハンドリングに伴う不具合修正
+-   1.0.0: (2025-09-28) 初期バージョン

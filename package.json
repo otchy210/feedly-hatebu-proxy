@@ -1,6 +1,6 @@
 {
   "name": "feedly-hatebu-proxy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hatebu API proxy server you should run when you use feedly-hatebu.",
   "main": "main.js",
   "scripts": {
